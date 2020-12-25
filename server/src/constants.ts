@@ -5,5 +5,5 @@ export enum VideoSharedMsgEvent {
   ADDED_VIDEO_MESSAGE = 'added-video',
   REMOVE_VIDEO_MESSAGE = 'remove-video',
   REMOVED_VIDEO_MESSAGE = 'removed-video',
-  GET_ALL_VIDEO_MESSAGE= 'get-all-video'
+  END_VIDEO_MESSAGE = 'end-video'
 }

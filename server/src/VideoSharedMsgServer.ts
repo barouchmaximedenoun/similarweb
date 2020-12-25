@@ -37,6 +37,11 @@ export class VideoSharedMsgServer {
         socket.broadcast.emit(VideoSharedMsgEvent.REMOVED_VIDEO_MESSAGE, m);
       });
 
+      socket.on(VideoSharedMsgEvent.END_VIDEO_MESSAGE, (m: VideoSharedMessage) => {
+        console.log('[server](message): %s', JSON.stringify(m));
+        this.videos = this.videos.filter(video => video.videoId !== m.videoId);
+      });
+
       /* socket.on(VideoSharedMsgEvent.GET_ALL_VIDEO_MESSAGE, (m: VideoSharedMessage) => {
         console.log('[server](message): %s', JSON.stringify(m));
         this.videos = this.videos.filter(video => video.videoId !== m.videoId);

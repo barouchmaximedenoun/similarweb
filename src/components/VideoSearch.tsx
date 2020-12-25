@@ -1,28 +1,31 @@
-import { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import YouTubeIcon from '@material-ui/icons/YouTube';
 import Grid from '@material-ui/core/Grid';
-// import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 // import parse from 'autosuggest-highlight/parse';
 import debounce from 'lodash/debounce';
-//import axios from 'axios';
 import axios from 'axios-jsonp-pro';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  autocomplete: {
+    width: 300,
+    backgroundColor: 'white',
+  },
   icon: {
     color: theme.palette.text.secondary,
     marginRight: theme.spacing(2),
   },
 }));
-
-/* interface VideoType {
-    searchTxt: string;
-    videoId?: number;
-} */
 
 const GOOGLE_AUTOCOMPLETE_URL: string = `https://clients1.google.com/complete/search`;
         
@@ -35,9 +38,6 @@ export default function UTubeVideo(props: any) {
     const fetchSuggestions = async (term: string, callback: (results?: string[]) => void) => {
         try {
             const data:any = await axios.jsonp(GOOGLE_AUTOCOMPLETE_URL, {
-                // A YT undocumented API for auto suggest search queries
-                //url: GOOGLE_AC_URL,
-                // adapter: jsonpAdapter,
                 params: {
                     client: "youtube",
                     hl: "en",
@@ -45,7 +45,7 @@ export default function UTubeVideo(props: any) {
                     q: term,
                 }
             });
-            console.log("jsonp results >> ", data);
+            // console.log("jsonp results >> ", data);
             const results: string[] = data[1].map((item: any[]) => item[0]);
             callback(results);
         }
@@ -94,10 +94,10 @@ export default function UTubeVideo(props: any) {
       }, [value, inputValue, getSuggestions]);
 
       return (
-        <>
+        <div className={classes.container}>
           <Autocomplete
             id="google-map-demo"
-            style={{ width: 300 }}
+            className={classes.autocomplete}
             getOptionLabel={(option) => option}
             filterOptions={(x) => x}
             options={options}
@@ -113,14 +113,14 @@ export default function UTubeVideo(props: any) {
               setInputValue(newInputValue);
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Add a location" variant="outlined" fullWidth />
+              <TextField {...params} label="Add a video" variant="outlined" fullWidth />
             )}
             renderOption={(option) => {
-                console.log(option);
+                // console.log(option);
               return (
                 <Grid container alignItems="center">
                   <Grid item>
-                    <LocationOnIcon className={classes.icon} />
+                    <YouTubeIcon className={classes.icon} />
                   </Grid>
                   <Grid item xs>
                     <span style={{ fontWeight: 400 }}>
@@ -139,6 +139,6 @@ export default function UTubeVideo(props: any) {
           >
               Add
           </Button>
-        </>
+        </div>
       );
 }

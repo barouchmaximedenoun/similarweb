@@ -6,17 +6,12 @@ const SERVER_URL = 'http://localhost:3001';
 export class SocketService {
   private socket: SocketIOClient.Socket = {} as SocketIOClient.Socket;
 
-  /* constructor() {
-    this.init();
-  } */
-
   public init (): SocketService {
     console.log('initiating socket service');
     this.socket = SocketIOClient(SERVER_URL);
     return this;
   }
 
-  // send a message for the server to broadcast
   public sendAddVideoMessage (video: VideoSharedMessage): void {
     console.log('emitting message: ' + video);
     this.socket.emit(VideoSharedMsgEvent.ADD_VIDEO_MESSAGE, video);
@@ -25,6 +20,11 @@ export class SocketService {
   public sendRemoveVideoMessage (video: VideoSharedMessage): void {
     console.log('emitting message: ' + video);
     this.socket.emit(VideoSharedMsgEvent.REMOVE_VIDEO_MESSAGE, video);
+  }
+
+  public sendEndVideoMessage (video: VideoSharedMessage): void {
+    console.log('emitting message: ' + video);
+    this.socket.emit(VideoSharedMsgEvent.END_VIDEO_MESSAGE, video);
   }
 
   // link message event to rxjs data source
