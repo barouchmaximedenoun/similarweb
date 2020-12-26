@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const GOOGLE_AUTOCOMPLETE_URL: string = `https://clients1.google.com/complete/search`;
+export const GOOGLE_AUTOCOMPLETE_URL: string = `https://clients1.google.com/complete/search`;
         
 export default function UTubeVideo(props: any) {
     const classes = useStyles();
@@ -96,7 +96,8 @@ export default function UTubeVideo(props: any) {
       return (
         <div className={classes.container}>
           <Autocomplete
-            id="google-map-demo"
+            data-testid="autocomplete"
+            id="autocomplete"
             className={classes.autocomplete}
             getOptionLabel={(option) => option}
             filterOptions={(x) => x}
